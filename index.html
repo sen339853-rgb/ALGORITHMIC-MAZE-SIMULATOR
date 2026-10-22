@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithmic Maze Simulator &bull; Multi-Algorithm Pathfinding Platform</title>
+    <meta name="description"
+        content="Interactive multi-algorithm maze generation and real-time pathfinding platform powered by native C++ and modern DSA algorithms (DFS, BFS, A*, Dijkstra, Greedy Best-First).">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="studio-app">
+        <!-- Top Navigation Bar -->
+        <header class="studio-header" id="main-header">
+            <div class="brand-group">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.2"
+                        fill="none">
+                        <rect x="3" y="3" width="18" height="18" rx="3" />
+                        <path d="M7 3v6h4v4h-4v8" />
+                        <path d="M15 3v4h-2" />
+                        <path d="M17 11h4" />
+                        <path d="M13 17h8" />
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1 class="brand-title">ALGORITHMIC MAZE SIMULATOR</h1>
+                    
+                </div>
+            </div>
+
+            <div class="header-center">
+                <span id="engine-status-badge" class="badge-engine checking" title="C++ Engine Status">
+                    <span class="status-pulse ping"></span> Testing C++ Engine...
+                </span>
+            </div>
+
+            <div class="header-actions">
+                <button id="btn-open-benchmark" class="btn-header" title="Benchmark All 5 Algorithms on Current Maze">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+                        <path d="M18 20V10M12 20V4M6 20v-6" />
+                    </svg>
+                    Benchmark All
+                </button>
+                <button id="btn-open-leaderboard" class="btn-header" title="Top 5 Performance Leaderboard">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                    Top 5 Leaderboard
+                </button>
+            </div>
+        </header>
+
+        <!-- Multi-Step Guided Workflow Progress Indicator -->
+        <nav class="step-progress-nav" aria-label="Setup Steps" id="step-progress-nav">
+            <ol class="step-progress-bar" id="step-progress-bar">
+                <li class="step-item active" data-step="1" id="prog-step-1">
+                    <span class="step-num">1</span>
+                    <span class="step-title">Welcome</span>
+                </li>
+                <li class="step-item" data-step="2" id="prog-step-2">
+                    <span class="step-num">2</span>
+                    <span class="step-title">Setup</span>
+                </li>
+                <li class="step-item" data-step="3" id="prog-step-3">
+                    <span class="step-num">3</span>
+                    <span class="step-title">Design Maze</span>
+                </li>
+                <li class="step-item" data-step="4" id="prog-step-4">
+                    <span class="step-num">4</span>
+                    <span class="step-title">Select Mode</span>
+                </li>
+                <li class="step-item" data-step="5" id="prog-step-5">
+                    <span class="step-num">5</span>
+                    <span class="step-title">Ready</span>
+                </li>
+                <li class="step-item" data-step="6" id="prog-step-6">
+                    <span class="step-num">6</span>
+                    <span class="step-title">Simulation</span>
+                </li>
+            </ol>
+        </nav>
+
+        <!-- Main Workspace Containing Step Views -->
+        <main class="studio-workspace" id="main-workspace">
+
+            <!-- ============================================== -->
+            <!-- STEP 1: WELCOME / CONFIGURATION SCREEN         -->
+            <!-- ============================================== -->
+            <section class="step-view active" id="step-view-1">
+                <div class="welcome-hero-card">
+                    <div class="hero-badge">
+                        <span class="pulse-cyan"></span>
+                        BTech CSE Data Structures & Algorithms Project
+                    </div>
+                    <h2 class="hero-title">Interactive Multi-Algorithm Maze & Pathfinding Platform</h2>
+                    <p class="hero-description">
+                        Explore fundamental graph traversal algorithms in real-time. Compare stack-based DFS,
+                        queue-based BFS,
+                        and min-heap priority queue implementations (A*, Dijkstra, Greedy Best-First) on procedural and
+                        custom mazes.
+                        Powered by a high-performance native C++ backend or responsive client DSA engine.
+                    </p>
+
+                    <div class="feature-pills-row">
+                        <div class="feature-pill">
+                            <span class="fp-icon">⚡</span>
+                            <div>
+                                <strong>5 Pathfinding Solvers</strong>
+                                <span>BFS, DFS, A*, Dijkstra, Greedy</span>
+                            </div>
+                        </div>
+                        <div class="feature-pill">
+                            <span class="fp-icon">🎨</span>
+                            <div>
+                                <strong>Custom Maze Studio</strong>
+                                <span>Procedural DFS & interactive wall drawing</span>
+                            </div>
+                        </div>
+                        <div class="feature-pill">
+                            <span class="fp-icon">🎮</span>
+                            <div>
+                                <strong>Manual WASD Gameplay</strong>
+                                <span>Real-time player movement & collision</span>
+                            </div>
+                        </div>
+                        <div class="feature-pill">
+                            <span class="fp-icon">📊</span>
+                            <div>
+                                <strong>Benchmark & Leaderboard</strong>
+                                <span>Empirical metrics & persistent Top 5 ranking</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-actions">
+                        <button id="btn-start-exploring" class="btn-primary-glow btn-lg">
+                            <span>Start Exploring</span>
+                            <span class="arrow-icon">&rarr;</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- STEP 2: SELECT MAZE TYPE AND DIFFICULTY        -->
+            <!-- ============================================== -->
+            <section class="step-view" id="step-view-2" style="display: none;">
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-eyebrow">STEP 2 OF 5</span>
+                        <h2 class="step-heading">Select Maze Type & Difficulty</h2>
+                        <p class="step-sub">Choose a predefined difficulty level or configure custom grid dimensions and
+                            creation style.</p>
+                    </div>
+
+                    <!-- Predefined Difficulty Cards -->
+                    <div class="difficulty-grid">
+                        <div class="diff-card active" data-difficulty="beginner" id="diff-card-beginner">
+                            <div class="diff-badge green">Easy</div>
+                            <h3 class="diff-title">Beginner</h3>
+                            <div class="diff-dim font-mono">11 &times; 11 Grid</div>
+                            <p class="diff-desc">Compact grid with 121 cells. Ideal for quickly observing level-by-level
+                                queue expansion.</p>
+                            <div class="diff-meta">
+                                <span>Corridors: ~35 cells</span>
+                                <span>Exploration: Instant</span>
+                            </div>
+                        </div>
+
+                        <div class="diff-card" data-difficulty="intermediate" id="diff-card-intermediate">
+                            <div class="diff-badge cyan">Balanced</div>
+                            <h3 class="diff-title">Intermediate</h3>
+                            <div class="diff-dim font-mono">15 &times; 15 Grid</div>
+                            <p class="diff-desc">Standard balanced labyrinth with 225 cells. Multiple branching
+                                junctions and dead ends.</p>
+                            <div class="diff-meta">
+                                <span>Corridors: ~70 cells</span>
+                                <span>Exploration: Moderate</span>
+                            </div>
+                        </div>
+
+                        <div class="diff-card" data-difficulty="advanced" id="diff-card-advanced">
+                            <div class="diff-badge purple">Hard</div>
+                            <h3 class="diff-title">Advanced</h3>
+                            <div class="diff-dim font-mono">21 &times; 21 Grid</div>
+                            <p class="diff-desc">Dense labyrinth with 441 cells. Deep passages demonstrating A*
+                                heuristic efficiency over BFS.</p>
+                            <div class="diff-meta">
+                                <span>Corridors: ~150 cells</span>
+                                <span>Exploration: Complex</span>
+                            </div>
+                        </div>
+
+                        <div class="diff-card" data-difficulty="custom" id="diff-card-custom">
+                            <div class="diff-badge amber">Custom</div>
+                            <h3 class="diff-title">Custom Maze</h3>
+                            <div class="diff-dim font-mono" id="custom-dim-display">15 &times; 15 Grid</div>
+                            <p class="diff-desc">Configure custom dimensions, custom start/goal coordinates, and
+                                creation method.</p>
+                            <div class="diff-meta">
+                                <span>Range: 5 to 35</span>
+                                <span>User Defined</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Maze Configuration Form Panel -->
+                    <div class="custom-config-panel" id="custom-config-panel" style="display: none;">
+                        <h4 class="custom-panel-title">Custom Maze Parameters</h4>
+                        <div class="custom-form-grid">
+                            <div class="form-group">
+                                <label for="custom-rows">Rows (5 to 35, Odd preferred):</label>
+                                <input type="number" id="custom-rows" value="15" min="5" max="35" step="2"
+                                    class="form-input">
+                                <span class="input-hint">Even numbers automatically adjust (+1) for corridor
+                                    walls</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="custom-cols">Columns (5 to 35, Odd preferred):</label>
+                                <input type="number" id="custom-cols" value="15" min="5" max="35" step="2"
+                                    class="form-input">
+                                <span class="input-hint">Even numbers automatically adjust (+1) for corridor
+                                    walls</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Start Position (Row, Col):</label>
+                                <div class="coord-inputs">
+                                    <input type="number" id="custom-start-r" value="1" min="1" max="33" placeholder="R"
+                                        class="form-input">
+                                    <input type="number" id="custom-start-c" value="1" min="1" max="33" placeholder="C"
+                                        class="form-input">
+                                </div>
+                                <span class="input-hint">Origin coordinate (default: 1, 1)</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Goal Position (Row, Col):</label>
+                                <div class="coord-inputs">
+                                    <input type="number" id="custom-goal-r" value="13" min="1" max="33" placeholder="R"
+                                        class="form-input">
+                                    <input type="number" id="custom-goal-c" value="13" min="1" max="33" placeholder="C"
+                                        class="form-input">
+                                </div>
+                                <span class="input-hint">Target coordinate (default: Rows-2, Cols-2)</span>
+                            </div>
+                        </div>
+
+                        <!-- Creation Method -->
+                        <div class="creation-method-group">
+                            <label class="method-label">Initial Maze Creation Method:</label>
+                            <div class="method-options">
+                                <label class="method-card">
+                                    <input type="radio" name="maze-creation-method" id="custom-method-gen"
+                                        value="generated" checked>
+                                    <div class="method-content">
+                                        <strong>Procedural Generated Maze</strong>
+                                        <span>Carve passages automatically using recursive DFS algorithm</span>
+                                    </div>
+                                </label>
+                                <label class="method-card">
+                                    <input type="radio" name="maze-creation-method" id="custom-method-manual"
+                                        value="manual">
+                                    <div class="method-content">
+                                        <strong>Blank Canvas (Manual Design)</strong>
+                                        <span>Start with clear corridors and design your own walls manually</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 Navigation -->
+                    <div class="step-footer">
+                        <button id="btn-step2-back" class="btn-ctrl">
+                            &larr; Back to Welcome
+                        </button>
+                        <button id="btn-step2-next" class="btn-primary-action">
+                            <span>Proceed to Maze Design</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- STEP 3: CUSTOM MAZE CREATION / DESIGN MAZE     -->
+            <!-- ============================================== -->
+            <section class="step-view" id="step-view-3" style="display: none;">
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-eyebrow">STEP 3 OF 5</span>
+                        <h2 class="step-heading">Maze Design & Solvability Validation</h2>
+                        <p class="step-sub">Inspect, test, or modify your maze. Click or drag to add/remove walls or
+                            reposition Start and Goal.</p>
+                    </div>
+
+                    <!-- Solvability Status Banner -->
+                    <div class="design-status-bar">
+                        <div id="design-solvability-banner" class="solvability-banner valid">
+                            <span class="banner-icon">&bull;</span>
+                            <span id="design-solvability-text" class="banner-text">Validating solvability...</span>
+                        </div>
+                        <span class="dim-tag" id="design-dim-tag">15 &times; 15</span>
+                    </div>
+
+                    <!-- Design Toolbar & Grid Canvas -->
+                    <div class="design-workspace-layout">
+                        <!-- Toolbar Deck -->
+                        <div class="design-toolbar">
+                            <div class="toolbar-section">
+                                <span class="toolbar-title">Drawing Tool</span>
+                                <div class="tool-buttons-stack">
+                                    <button class="tool-btn active" data-tool="wall" id="tool-wall"
+                                        title="Paint Solid Walls">
+                                        <span class="swatch-mini swatch-wall"></span> Wall
+                                    </button>
+                                    <button class="tool-btn" data-tool="erase" id="tool-erase"
+                                        title="Erase Walls to Corridors">
+                                        <span class="swatch-mini swatch-path"></span> Erase
+                                    </button>
+                                    <button class="tool-btn" data-tool="start" id="tool-start"
+                                        title="Place Start Position">
+                                        <span class="swatch-mini swatch-start"></span> Start (S)
+                                    </button>
+                                    <button class="tool-btn" data-tool="goal" id="tool-goal"
+                                        title="Place Goal Position">
+                                        <span class="swatch-mini swatch-end"></span> Goal (E)
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="toolbar-section">
+                                <span class="toolbar-title">Actions</span>
+                                <div class="action-buttons-stack">
+                                    <button id="btn-design-generate" class="action-btn btn-primary-action"
+                                        title="Procedurally Carve New Solvable Maze">
+                                        &#9851; Generate Random
+                                    </button>
+                                    <button id="btn-design-clear" class="action-btn" title="Clear All Interior Walls">
+                                        &#128465; Clear All
+                                    </button>
+                                    <button id="btn-design-undo" class="action-btn" title="Undo Last Drawing Edit">
+                                        &#8630; Undo Edit
+                                    </button>
+                                    <button id="btn-design-validate" class="action-btn btn-validate"
+                                        title="Check Reachability from Start to Goal">
+                                        &#10003; Validate Maze
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="toolbar-hint">
+                                <small>💡 <strong>Tip:</strong> Click or hold and drag over cells to draw quickly. Outer
+                                    border walls are locked.</small>
+                            </div>
+                        </div>
+
+                        <!-- Canvas Area -->
+                        <div class="design-canvas-wrap">
+                            <div class="grid-viewport" id="design-grid-viewport">
+                                <div id="maze-grid-container" class="maze-grid"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 Navigation -->
+                    <div class="step-footer">
+                        <button id="btn-step3-back" class="btn-ctrl">
+                            &larr; Back to Setup
+                        </button>
+                        <button id="btn-step3-next" class="btn-primary-action">
+                            <span>Proceed to Select Mode</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- STEP 4: SELECT PLAY MODE                       -->
+            <!-- ============================================== -->
+            <section class="step-view" id="step-view-4" style="display: none;">
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-eyebrow">STEP 4 OF 5</span>
+                        <h2 class="step-heading">Select Traversal Mode or Algorithm</h2>
+                        <p class="step-sub">Choose manual interactive gameplay or an automated graph traversal algorithm
+                            with its theoretical data structure.</p>
+                    </div>
+
+                    <!-- Mode Cards Grid -->
+                    <div class="mode-cards-grid">
+                        <!-- 1. Manual Play -->
+                        <div class="algo-card card-manual" data-mode="manual" id="card-mode-manual">
+                            <div class="algo-card-head">
+                                <span class="algo-icon">🎮</span>
+                                <span class="algo-badge play">Interactive</span>
+                            </div>
+                            <h3 class="algo-title">Manual Play Mode</h3>
+                            <div class="algo-ds font-mono">Keyboard Navigation (WASD / Arrows)</div>
+                            <p class="algo-desc">
+                                Navigate the maze yourself in real time. Features wall collision detection, live timer,
+                                and unique visited cell tracking.
+                            </p>
+                            <div class="algo-props">
+                                <span>Input: <strong>WASD / Arrows</strong></span>
+                                <span>Goal: <strong>Reach Red Cell</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- 2. BFS Solver -->
+                        <div class="algo-card active" data-mode="bfs" id="card-mode-bfs">
+                            <div class="algo-card-head">
+                                <span class="algo-icon">⚡</span>
+                                <span class="algo-badge opt">Guaranteed Shortest</span>
+                            </div>
+                            <h3 class="algo-title">Breadth-First Search (BFS)</h3>
+                            <div class="algo-ds font-mono">Data Structure: std::queue (FIFO Queue)</div>
+                            <p class="algo-desc">
+                                Explores the maze level-by-level in concentric rings from Start. Mathematically
+                                guarantees finding the shortest path in unweighted mazes.
+                            </p>
+                            <div class="algo-props">
+                                <span>Time: <strong>O(V + E)</strong></span>
+                                <span>Space: <strong>O(V) Queue</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- 3. DFS Solver -->
+                        <div class="algo-card" data-mode="dfs" id="card-mode-dfs">
+                            <div class="algo-card-head">
+                                <span class="algo-icon">🔍</span>
+                                <span class="algo-badge deep">Deep Traversal</span>
+                            </div>
+                            <h3 class="algo-title">Depth-First Search (DFS)</h3>
+                            <div class="algo-ds font-mono">Data Structure: std::stack (LIFO Stack)</div>
+                            <p class="algo-desc">
+                                Uses a stack-based depth-first exploration strategy to dive deep into corridors until
+                                hitting dead ends, then backtracks.
+                            </p>
+                            <div class="algo-props">
+                                <span>Time: <strong>O(V + E)</strong></span>
+                                <span>Optimality: <strong>Non-optimal</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- 4. A* Search -->
+                        <div class="algo-card" data-mode="astar" id="card-mode-astar">
+                            <div class="algo-card-head">
+                                <span class="algo-icon">⭐</span>
+                                <span class="algo-badge opt">Optimal &amp; Heuristic</span>
+                            </div>
+                            <h3 class="algo-title">A* Search Algorithm</h3>
+                            <div class="algo-ds font-mono">Data Structure: std::priority_queue (Min-Heap f = g + h)
+                            </div>
+                            <p class="algo-desc">
+                                Uses path cost so far g(n) combined with Manhattan distance heuristic h(n) to prioritize
+                                expansion towards the goal while guaranteeing the shortest path.
+                            </p>
+                            <div class="algo-props">
+                                <span>Evaluation: <strong>f(n) = g(n) + h(n)</strong></span>
+                                <span>Optimality: <strong>Shortest Path</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- 5. Dijkstra's Algorithm -->
+                        <div class="algo-card" data-mode="dijkstra" id="card-mode-dijkstra">
+                            <div class="algo-card-head">
+                                <span class="algo-icon">🌐</span>
+                                <span class="algo-badge opt">Optimal Shortest Path</span>
+                            </div>
+                            <h3 class="algo-title">Dijkstra's Algorithm</h3>
+                            <div class="algo-ds font-mono">Data Structure: std::priority_queue (Min-Heap dist)</div>
+                            <p class="algo-desc">
+                                Finds shortest paths using accumulated path costs. Expands nodes in strict order of
+                                cumulative distance from Start with uniform edge weights.
+                            </p>
+                            <div class="algo-props">
+                                <span>Weights: <strong>Uniform (Cost = 1)</strong></span>
+                                <span>Optimality: <strong>Shortest Path</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- 6. Greedy Best-First Search -->
+                        <div class="algo-card" data-mode="greedy" id="card-mode-greedy">
+                            <div class="algo-card-head">
+                                <span class="algo-icon">🎯</span>
+                                <span class="algo-badge fast">Fast Heuristic</span>
+                            </div>
+                            <h3 class="algo-title">Greedy Best-First Search</h3>
+                            <div class="algo-ds font-mono">Data Structure: std::priority_queue (Min-Heap h)</div>
+                            <p class="algo-desc">
+                                Prioritizes cells purely based on estimated distance to the goal h(n). Rapidly moves
+                                towards the goal but is not guaranteed to produce a shortest path.
+                            </p>
+                            <div class="algo-props">
+                                <span>Heuristic: <strong>Manhattan |Δr| + |Δc|</strong></span>
+                                <span>Optimality: <strong>Non-optimal</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 Navigation & Benchmark Shortcut -->
+                    <div class="step-footer">
+                        <button id="btn-step4-back" class="btn-ctrl">
+                            &larr; Back to Maze Design
+                        </button>
+                        <div class="footer-right-group">
+                            <button id="btn-step4-compare" class="btn-ctrl"
+                                title="Open Benchmark to Compare All Solvers">
+                                📊 Compare All Solvers
+                            </button>
+                            <button id="btn-step4-next" class="btn-primary-action">
+                                <span>Review &amp; Ready</span>
+                                <span>&rarr;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- STEP 5: READY SCREEN                           -->
+            <!-- ============================================== -->
+            <section class="step-view" id="step-view-5" style="display: none;">
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-eyebrow">STEP 5 OF 5</span>
+                        <h2 class="step-heading">Configuration Summary &amp; Ready Check</h2>
+                        <p class="step-sub">Review your selected configuration before launching real-time execution.</p>
+                    </div>
+
+                    <!-- Configuration Summary Table Card -->
+                    <div class="ready-summary-container">
+                        <div class="summary-card">
+                            <h3 class="summary-card-title">Active Configuration</h3>
+                            <div class="summary-rows-stack">
+                                <div class="summary-row">
+                                    <span class="s-label">Maze Difficulty / Type</span>
+                                    <span class="s-val highlight-cyan" id="ready-difficulty">Intermediate
+                                        (Predefined)</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="s-label">Grid Dimensions</span>
+                                    <span class="s-val font-mono" id="ready-dimensions">15 &times; 15 (225 cells)</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="s-label">Start Position</span>
+                                    <span class="s-val font-mono highlight-green" id="ready-start-pos">(1, 1) [S]</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="s-label">Goal Position</span>
+                                    <span class="s-val font-mono highlight-red" id="ready-goal-pos">(13, 13) [E]</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="s-label">Solvability Status</span>
+                                    <span class="s-val highlight-cyan" id="ready-solvability">Verified Reachable</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="s-label">Selected Mode</span>
+                                    <span class="s-val highlight-gold" id="ready-mode-name">Breadth-First Search
+                                        (BFS)</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="s-label">Underlying Data Structure</span>
+                                    <span class="s-val font-mono" id="ready-ds-name">std::queue (FIFO Queue)</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="s-label">Active Backend Engine</span>
+                                    <span class="s-val highlight-cyan" id="ready-engine-info">C++ Native Winsock
+                                        Engine</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ready Checklist -->
+                        <div class="checklist-card">
+                            <h3 class="checklist-title">Pre-Simulation Checklist</h3>
+                            <ul class="checklist-items">
+                                <li class="check-item ok">
+                                    <span class="ci-icon">✓</span>
+                                    <span>Maze grid initialized and boundaries protected</span>
+                                </li>
+                                <li class="check-item ok">
+                                    <span class="ci-icon">✓</span>
+                                    <span>Start and Goal placed on distinct walkable coordinates</span>
+                                </li>
+                                <li class="check-item ok" id="check-item-solvable">
+                                    <span class="ci-icon">✓</span>
+                                    <span id="check-item-solvable-text">Path connectivity verified between Start and
+                                        Goal</span>
+                                </li>
+                                <li class="check-item ok">
+                                    <span class="ci-icon">✓</span>
+                                    <span>Telemetry monitors and animation pipelines ready</span>
+                                </li>
+                            </ul>
+
+                            <div class="launch-cta-box">
+                                <p class="launch-hint">Click below to transition to the live simulation stage.</p>
+                                <button id="btn-start-simulation" class="btn-primary-glow btn-lg w-full">
+                                    <span>Start Simulation</span>
+                                    <span class="play-icon">&#9654;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 Navigation -->
+                    <div class="step-footer">
+                        <button id="btn-step5-back" class="btn-ctrl">
+                            &larr; Back to Select Mode
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- STEP 6: REAL-TIME SIMULATION & RESULTS         -->
+            <!-- ============================================== -->
+            <section class="step-view" id="step-view-6" style="display: none;">
+                <!-- Reconfiguration Quick Navigation Ribbon -->
+                <div class="sim-nav-ribbon">
+                    <div class="sim-ribbon-left">
+                        <span class="sim-active-mode-tag" id="sim-active-mode-tag">BFS Solver</span>
+                        <div id="maze-solvability-pill" class="solvability-pill valid">
+                            <span class="status-dot"></span>
+                            <span class="solvability-text">Solvable Maze</span>
+                        </div>
+                    </div>
+                    <div class="sim-ribbon-right">
+                        <button id="btn-reconfigure-setup" class="btn-ribbon-nav"
+                            title="Change Maze Size or Difficulty">
+                            ⚙️ Setup
+                        </button>
+                        <button id="btn-reconfigure-edit-maze" class="btn-ribbon-nav" title="Edit Walls or Start/Goal">
+                            🎨 Edit Maze
+                        </button>
+                        <button id="btn-reconfigure-change-mode" class="btn-ribbon-nav"
+                            title="Switch Solver or Play Mode">
+                            ⚡ Change Mode
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Simulation Stage Layout (Canvas + Telemetry) -->
+                <div class="stage-layout">
+                    <!-- Left/Center Maze Canvas Area -->
+                    <div class="canvas-panel">
+                        <!-- Canvas Top Bar -->
+                        <div class="canvas-top-bar">
+                            <div class="active-algo-headline" id="active-algo-headline">
+                                <strong id="active-algo-name">Breadth-First Search (BFS)</strong>
+                                <span class="algo-ds-pill font-mono" id="active-algo-ds">std::queue</span>
+                            </div>
+
+                            <div id="manual-mode-hint" class="manual-inline-hint" style="display: none;">
+                                <span class="hint-key">W</span>
+                                <span class="hint-key">A</span>
+                                <span class="hint-key">S</span>
+                                <span class="hint-key">D</span>
+                                <span>or Arrow keys to navigate &bull; Reach Red Goal!</span>
+                            </div>
+                        </div>
+
+                        <!-- The Primary Maze Grid Viewport -->
+                        <div class="grid-viewport" id="grid-viewport">
+                            <!-- Dynamic Maze Grid DOM mounted here -->
+                        </div>
+
+                        <!-- Bottom Controls: Playback & Speed -->
+                        <div class="playback-bar">
+                            <div class="playback-actions">
+                                <button id="btn-solve-maze" class="btn-solve-primary" title="Start Solving Simulation">
+                                    <span class="play-icon">&#9654;</span>
+                                    <span id="btn-solve-label">Solve Maze</span>
+                                </button>
+                                <button id="btn-pause-sim" class="btn-ctrl btn-pause" title="Pause Simulation" disabled>
+                                    &#10074;&#10074; Pause
+                                </button>
+                                <button id="btn-reset-sim" class="btn-ctrl" title="Reset Visited &amp; Path Overlay">
+                                    &#8634; Reset
+                                </button>
+                                <button id="btn-stop-sim" class="btn-ctrl" title="Stop Simulation" disabled>
+                                    &#9632; Stop
+                                </button>
+                            </div>
+
+                            <!-- Speed Selector -->
+                            <div class="speed-control-group" id="speed-control-group">
+                                <span class="speed-tag">Speed</span>
+                                <div class="speed-pills">
+                                    <button class="speed-pill" data-speed="slow" id="speed-slow">0.5&times;</button>
+                                    <button class="speed-pill active" data-speed="normal"
+                                        id="speed-normal">1&times;</button>
+                                    <button class="speed-pill" data-speed="fast" id="speed-fast">2&times;</button>
+                                    <button class="speed-pill" data-speed="instant" id="speed-instant">Instant</button>
+                                </div>
+                            </div>
+
+                            <!-- Legend -->
+                            <div class="stage-legend">
+                                <span class="legend-chip"><span class="legend-swatch swatch-start"></span> Start</span>
+                                <span class="legend-chip"><span class="legend-swatch swatch-end"></span> Goal</span>
+                                <span class="legend-chip"><span class="legend-swatch swatch-head"></span> Head</span>
+                                <span class="legend-chip"><span class="legend-swatch swatch-visited"></span>
+                                    Visited</span>
+                                <span class="legend-chip"><span class="legend-swatch swatch-solution"></span>
+                                    Path</span>
+                                <span class="legend-chip"><span class="legend-swatch swatch-player"></span>
+                                    Player</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Telemetry Panel -->
+                    <aside class="telemetry-panel">
+                        <div class="telemetry-header">
+                            <h3 class="telemetry-title">Live Telemetry</h3>
+                            <span class="status-indicator-badge status-ready" id="stat-status">Ready</span>
+                        </div>
+
+                        <!-- Primary Metrics Grid -->
+                        <div class="metrics-card-grid">
+                            <div class="metric-card">
+                                <span class="m-label">Nodes Explored</span>
+                                <span class="m-value highlight-cyan" id="stat-explored">0</span>
+                            </div>
+
+                            <div class="metric-card">
+                                <span class="m-label">Path Length (Moves)</span>
+                                <span class="m-value highlight-pink" id="stat-path-len">-</span>
+                            </div>
+
+                            <div class="metric-card">
+                                <span class="m-label">Execution Time</span>
+                                <span class="m-value" id="stat-exec-time">0.00 ms</span>
+                            </div>
+
+                            <div class="metric-card">
+                                <span class="m-label">Frontier Discovered</span>
+                                <span class="m-value" id="stat-discovered">0</span>
+                            </div>
+                        </div>
+
+                        <!-- Secondary Metrics List -->
+                        <div class="telemetry-details">
+                            <div class="detail-row">
+                                <span class="d-label">Exploration Position</span>
+                                <span class="d-val font-mono" id="stat-cur-pos">(1, 1)</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="d-label">Unique Cells Visited</span>
+                                <span class="d-val font-mono" id="stat-visited-count">0</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="d-label">Algorithm Optimality</span>
+                                <span class="d-val" id="stat-optimality-tag"><span
+                                        class="tag-opt optimal">Optimal</span></span>
+                            </div>
+                            <div class="detail-row" id="manual-moves-row" style="display: none;">
+                                <span class="d-label">Player Moves</span>
+                                <span class="d-val font-mono highlight-gold" id="stat-player-moves">0</span>
+                            </div>
+                        </div>
+
+                        <!-- Result Banner Container -->
+                        <div id="sim-result-banner" class="sim-result-card" style="display: none;">
+                            <div class="result-badge" id="sim-result-badge">Solved!</div>
+                            <p class="result-msg" id="sim-result-msg">Algorithm successfully discovered path.</p>
+                        </div>
+
+                        <!-- Manual WASD Keypad Graphic (Shown in Manual Mode) -->
+                        <div class="manual-pad-card" id="manual-pad-card" style="display: none;">
+                            <span class="pad-title">Keyboard Controller</span>
+                            <div class="keypad-grid">
+                                <div class="key-cap" id="key-w">W</div>
+                                <div class="key-cap" id="key-a">A</div>
+                                <div class="key-cap" id="key-s">S</div>
+                                <div class="key-cap" id="key-d">D</div>
+                            </div>
+                        </div>
+
+                        <!-- Save Record Actions -->
+                        <div class="telemetry-actions">
+                            <button id="btn-save-leaderboard-record" class="btn-save-run" style="display: none;">
+                                &#9733; Save Result to Leaderboard
+                            </button>
+                            <button id="btn-side-benchmark" class="btn-ctrl w-full" style="margin-top: 8px;">
+                                📊 Compare All Solvers on this Maze
+                            </button>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ============================================== -->
+        <!-- MODALS (Blur Overlay Dialogs)                  -->
+        <!-- ============================================== -->
+
+        <!-- 1. Benchmark Comparison Modal -->
+        <div id="benchmark-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-window modal-wide">
+                <div class="modal-head">
+                    <div>
+                        <h3 class="modal-heading">Algorithm Benchmark Comparison</h3>
+                        <p class="modal-sub">Comparing DFS, BFS, A*, Dijkstra, and Greedy on this exact maze layout.</p>
+                    </div>
+                    <button class="modal-close-btn" id="btn-close-benchmark">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- Benchmark Table -->
+                    <div class="table-wrap">
+                        <table class="bench-table">
+                            <thead>
+                                <tr>
+                                    <th>Algorithm</th>
+                                    <th>Data Structure</th>
+                                    <th>Nodes Explored</th>
+                                    <th>Frontier Cells</th>
+                                    <th>Path Length</th>
+                                    <th>Search Latency</th>
+                                    <th>Optimality</th>
+                                </tr>
+                            </thead>
+                            <tbody id="benchmark-table-body">
+                                <tr>
+                                    <td colspan="7" class="loading-cell">Loading benchmarks...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Visual Comparison Bar Chart -->
+                    <div class="bench-chart-card">
+                        <h4 class="chart-heading">Visual Efficiency (Nodes Explored vs Path Moves)</h4>
+                        <div id="benchmark-chart" class="bench-bars-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Leaderboard Modal -->
+        <div id="leaderboard-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-window modal-wide">
+                <div class="modal-head">
+                    <div>
+                        <h3 class="modal-heading">Top 5 Performance Leaderboard</h3>
+                        <p class="modal-sub">Persistent local records of top manual completions and algorithmic
+                            traversals.</p>
+                    </div>
+                    <div class="modal-head-actions">
+                        <button id="btn-clear-leaderboard" class="btn-clear-lb">Clear Records</button>
+                        <button class="modal-close-btn" id="btn-close-leaderboard">&times;</button>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <!-- Tabs -->
+                    <div class="lb-switch-tabs">
+                        <button id="tab-lb-manual" class="tab-pill active">🎮 Manual Gameplay Top 5</button>
+                        <button id="tab-lb-algo" class="tab-pill">⚡ Algorithm Solvers Top 5</button>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="table-wrap">
+                        <table class="bench-table">
+                            <thead>
+                                <tr id="leaderboard-table-headers">
+                                    <th>Rank</th>
+                                    <th>Player</th>
+                                    <th>Grid</th>
+                                    <th>Moves</th>
+                                    <th>Visited</th>
+                                    <th>Time</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboard-table-body">
+                                <tr>
+                                    <td colspan="7" class="loading-cell">Loading records...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Victory Modal (Manual Play) -->
+        <div id="victory-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-window modal-sm text-center">
+                <div class="victory-banner">&#11088; VICTORY! &#11088;</div>
+                <h3 class="modal-heading" style="margin-top: 10px;">Maze Solved!</h3>
+                <p class="modal-sub">You successfully navigated from Start to Goal.</p>
+
+                <div class="victory-stats-row">
+                    <div class="vstat">
+                        <span class="vstat-lbl">Moves</span>
+                        <span class="vstat-val" id="modal-vic-moves">0</span>
+                    </div>
+                    <div class="vstat">
+                        <span class="vstat-lbl">Visited</span>
+                        <span class="vstat-val" id="modal-vic-visited">0</span>
+                    </div>
+                    <div class="vstat">
+                        <span class="vstat-lbl">Time</span>
+                        <span class="vstat-val highlight-gold" id="modal-vic-time">0.00s</span>
+                    </div>
+                </div>
+
+                <div class="victory-input-box">
+                    <label for="modal-player-name">Your Display Name:</label>
+                    <input type="text" id="modal-player-name" value="Player 1" maxlength="20" class="form-input">
+                </div>
+
+                <div class="victory-actions">
+                    <button id="btn-modal-save-victory" class="btn-primary-action w-full">Save to Leaderboard</button>
+                    <button id="btn-modal-play-again" class="btn-ctrl w-full" style="margin-top: 8px;">Play
+                        Again</button>
+                    <button id="btn-modal-return-setup" class="btn-ctrl w-full" style="margin-top: 8px;">Return to Maze
+                        Setup</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Save Algorithm Run Modal -->
+        <div id="save-algo-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-window modal-sm text-center">
+                <h3 class="modal-heading">Save Solver Performance</h3>
+                <p class="modal-sub">Enter a display name to record this successful run to the Top 5 Leaderboard.</p>
+
+                <div class="victory-input-box" style="margin-top: 16px;">
+                    <label for="modal-algo-runner-name">Runner / Solver Name:</label>
+                    <input type="text" id="modal-algo-runner-name" value="Solver Run" maxlength="20" class="form-input">
+                </div>
+
+                <div class="victory-actions" style="margin-top: 16px;">
+                    <button id="btn-modal-confirm-save-algo" class="btn-primary-action w-full">Save to Top 5</button>
+                    <button id="btn-modal-cancel-save-algo" class="btn-ctrl w-full"
+                        style="margin-top: 8px;">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Application Script -->
+    <script src="app.js"></script>
+</body>
+
+</html>
